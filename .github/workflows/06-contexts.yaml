@@ -1,7 +1,9 @@
 name: 06 - Contexts
+run-name: My custom workflow run name - ${{ runner.os }}
 on:
   push:
-  
+
+
   workflow_dispatch:
   
 jobs:
@@ -20,4 +22,3 @@ jobs:
 
       - name: Retrieve Variable
         run: echo ${{ vars.MY_VAR }}
-        
