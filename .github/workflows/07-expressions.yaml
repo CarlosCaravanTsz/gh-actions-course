@@ -22,4 +22,4 @@ jobs:
         if: ${{ inputs.debug == 'true' && github.ref == 'refs/heads/main' }}
         run: echo "This workflow was triggered from the main branch."
       - name: Greeting
-        run: "Hello, world"
+        run: echo "Hello, world"
