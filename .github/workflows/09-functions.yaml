@@ -7,6 +7,8 @@ jobs:
   echo1:
     runs-on: ubuntu-latest
     steps:
+      - name: Sleep for 20 seconds
+        run: sleep 20
       - name: 'Failing Step'
         run: exit 1
       - name: I will be skipped
@@ -21,3 +23,4 @@ jobs:
       - name: I will execute when cancelled
         if: ${{ cancelled() }}
         run: echo "I will print if the workflow is cancelled."
+        
