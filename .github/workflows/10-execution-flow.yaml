@@ -25,7 +25,7 @@ jobs:
           echo "Running unit tests..."
           echo "Done!"
       - name: 'Failing tests'
-        if: ${{ !github.event.inputs.pass-unit-tests }}
+        if: ${{ !inputs.pass-unit-tests }}
         run: |
           echo "Some unit tests failed."
           exit 1
