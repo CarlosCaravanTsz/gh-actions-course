@@ -1,5 +1,4 @@
 name: 11 - Working with Inputs
-
 on:
   workflow_dispatch:
     inputs:
