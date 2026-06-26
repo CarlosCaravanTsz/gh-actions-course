@@ -1,6 +1,6 @@
 name: 12 - Working with outputs
 
-on: 
+on:
   workflow_dispatch:
     inputs:
       build-status:
