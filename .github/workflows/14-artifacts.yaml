@@ -50,5 +50,5 @@ jobs:
           path: build # where to put the downloaded artifact
 
       - name: Show folder structure
-        run: ls - R
+        run: ls -R
           
