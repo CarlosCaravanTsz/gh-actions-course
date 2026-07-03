@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.target-env }}
     env:
-      my-env-value: ${{ vars.MY_ENV_VALUE }} || 'default-value'
+      my-env-value: ${{ vars.MY_ENV_VALUE || 'default-value' }}
     steps:
     - name: Echo environment value
       run: echo ${{ env.my-env-value }}
