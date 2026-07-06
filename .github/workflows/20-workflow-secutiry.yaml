@@ -20,7 +20,7 @@ jobs:
           fi
   safer-pr:
     runs-on: ubuntu-latest
-    environment:
+    env:
         TITLE_VAR = ${{ github.event.pull_request.title }}
     steps:
       - name: Checkout code
@@ -28,7 +28,7 @@ jobs:
 
       - name: Check PR Title
         run: |
-          title=${{ environment.TITLE_VAR }}
+          title=${{ vars.TITLE_VAR }}
           if [[ $title =~ ^feat ]]; then
             echo "PR is a feature"
             exit 0
