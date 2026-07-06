@@ -10,7 +10,7 @@ jobs:
 
       - name: Check PR Title
         run: |
-          title = ${{ github.event.pull_request.title }}
+          title=${{ github.event.pull_request.title }}
           if [[ $title =~ ^feat ]]; then
             echo "PR is a feature"
             exit 0
@@ -18,3 +18,5 @@ jobs:
             echo "PR is not a feature"
             exit 1
           fi
+  safer-pr:
+    runs-on: ubuntu-latest
