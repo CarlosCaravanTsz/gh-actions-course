@@ -8,4 +8,4 @@ jobs:
     with:
       target-directory: ./my-app
   e2e-tests:
-    uses: CarlosCaravanTsz@github-actions-course-example-e2e/.github/workflows/e2e.yaml@main  # <owner>/<repo>/.github/workflows/<workflow_file>@<version>
+    uses: CarlosCaravanTsz/github-actions-course-example-e2e/.github/workflows/e2e.yaml@main  # <owner>/<repo>/.github/workflows/<workflow_file>@<version>
