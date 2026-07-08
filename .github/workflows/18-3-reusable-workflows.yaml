@@ -8,6 +8,7 @@ jobs:
     with:
       target-directory: ./my-app
   e2e-tests:
+    needs: deploy
     uses: CarlosCaravanTsz/github-actions-course-example-e2e/.github/workflows/e2e.yaml@master  # <owner>/<repo>/.github/workflows/<workflow_file>@<version>
     secrets: 
       access-token: ${{ secrets.GH_TOKEN || ''}}
