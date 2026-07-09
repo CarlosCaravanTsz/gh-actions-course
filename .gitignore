@@ -1,2 +1,3 @@
 node_modules
 handle-ssh-error.txt
+!.github/actions/**/node_modules
