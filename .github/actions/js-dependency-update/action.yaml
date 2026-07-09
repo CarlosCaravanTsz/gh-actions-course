@@ -7,7 +7,7 @@ inputs:
     default: main
     required: false
   target-branch:
-    description: The brnach from which the PR is created
+    description: The branch from which the PR is created
     default: update-dependencies
     requires: true
   working-directory:

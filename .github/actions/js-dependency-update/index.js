@@ -28,17 +28,17 @@ async function run() {
 
   core.setSecret(ghToken);
 
-  if (validateBranch({ branchName: baseBranch })) {
+  if (!validateBranch({ branchName: baseBranch })) {
     core.setFailed("Invalid base-branch name.");
     return;
   }
 
-  if (validateBranch({ branchName: targetBranch })) {
+  if (!validateBranch({ branchName: targetBranch })) {
     core.setFailed("Invalid base-branch name.");
     return;
   }
 
-  if (validateDirName({ dirName: workingDir })) {
+  if (!validateDirName({ dirName: workingDir })) {
     core.setFailed("Invalid base-branch name.");
     return;
   }
