@@ -6,7 +6,7 @@ on:
       base-branch:
         type: string
         default: main
-      target-branch:
+      head-branch:
         type: string
         default: update-dependencies
       working-dir:
