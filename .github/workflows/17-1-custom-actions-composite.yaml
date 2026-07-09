@@ -1,6 +1,15 @@
 name: 17 - 1 - Custom Actions - Composite
 on:
   workflow_dispatch:
+    inputs:
+      target-env:
+        description: "target env"
+        type: choice
+        options:
+          - dev
+          - prod
+        default: dev
+        required: false
 
 jobs:
   build:
