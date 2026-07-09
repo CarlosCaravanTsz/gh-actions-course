@@ -21,7 +21,7 @@ async function run() {
   5. Otherwise, conclude the custom action
 */
   const baseBranch = core.getInput("base-branch", { required: true });
-  const targetBranch = core.getInput("target-branch", {required: true});
+  const headBranch = core.getInput("head-branch", {required: true});
   const ghToken = core.getInput("gh-token", { required: true });
   const workingDir = core.getInput("working-directory", { required: true });
   const debug = core.getBooleanInput("debug");
@@ -33,7 +33,7 @@ async function run() {
     return;
   }
 
-  if (!validateBranch({ branchName: targetBranch })) {
+  if (!validateBranch({ branchName: headBranch })) {
     core.setFailed("Invalid base-branch name.");
     return;
   }
@@ -44,7 +44,7 @@ async function run() {
   }
 
   core.info(`[js-dependency-update] : base-branch is ${baseBranch}`);
-  core.info(`[js-dependency-update] : target-branch is ${targetBranch}`);
+  core.info(`[js-dependency-update] : target-branch is ${headBranch}`);
   core.info(`[js-dependency-update] : working dir is ${workingDir}`);
 
   await exec.exec('npm update', [], {
@@ -59,16 +59,16 @@ async function run() {
     core.info('There are updates available!')
     await exec.exec('git config --global user.name "gh-automation"')
     await exec.exec('git config --global user.email "testing@automation.ui"')
-    await exec.exec(`git checkout -b ${targetBranch} `, [], {
+    await exec.exec(`git checkout -b ${headBranch} `, [], {
       cwd: workingDir
     })
-    await exec.exec(`git add  package.json package-lock.json`, [], {
+    await exec.exec(`git add package.json package-lock.json`, [], {
       cwd: workingDir,
     });
     await exec.exec(`git commit -m "chore: update dependencies`, [], {
       cwd: workingDir,
     });
-    await exec.exec(`git push -u origin ${targetBranch} --force`, [], {
+    await exec.exec(`git push -u origin ${headBranch} --force`, [], {
       cwd: workingDir,
     });
 
@@ -81,7 +81,7 @@ async function run() {
         title: 'Update NPM dependencies',
         body: 'This pull request updates NPM packages',
         base: baseBranch,
-        head: targetBranch
+        head: headBranch
       });
     } catch (e) {
       core.error('Something went wrong while creating the PR. Check the logs below')
