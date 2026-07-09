@@ -47,7 +47,7 @@ async function run() {
   core.info(`[js-dependency-update] : target-branch is ${headBranch}`);
   core.info(`[js-dependency-update] : working dir is ${workingDir}`);
 
-  await exec.exec('npm update', [], {
+  await exec.exec('npm update --legacy-peer-deps', [], {
     cwd: workingDir
   })
 
