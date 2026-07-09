@@ -1,6 +1,6 @@
 const core = require("@actions/core");
 const exec = require("@actions/exec");
-
+const github = require("@actions/github")
 
 const validateBranch = ({ branchName }) =>
   /^[a-zA-Z0-9_\-\.\/]+$/.test(branchName);
@@ -20,10 +20,10 @@ async function run() {
     4.2. Create a PR to the base-branch using the octokit API
   5. Otherwise, conclude the custom action
 */
-  const baseBranch = core.getInput("base-branch");
-  const targetBranch = core.getInput("target-branch");
-  const ghToken = core.getInput("gh-token");
-  const workingDir = core.getInput("working-directory");
+  const baseBranch = core.getInput("base-branch", { required: true });
+  const targetBranch = core.getInput("target-branch", {required: true});
+  const ghToken = core.getInput("gh-token", { required: true });
+  const workingDir = core.getInput("working-directory", { required: true });
   const debug = core.getBooleanInput("debug");
 
   core.setSecret(ghToken);
@@ -43,7 +43,7 @@ async function run() {
     return;
   }
 
-  core.info(`[js-dependency-update] : base-branch is ${baseBranch}`); 
+  core.info(`[js-dependency-update] : base-branch is ${baseBranch}`);
   core.info(`[js-dependency-update] : target-branch is ${targetBranch}`);
   core.info(`[js-dependency-update] : working dir is ${workingDir}`);
 
@@ -57,6 +57,40 @@ async function run() {
 
   if (gitStatus.stdout.length > 0) {
     core.info('There are updates available!')
+    await exec.exec('git config --global user.name "gh-automation"')
+    await exec.exec('git config --global user.email "testing@automation.ui"')
+    await exec.exec(`git checkout -b ${targetBranch} `, [], {
+      cwd: workingDir
+    })
+    await exec.exec(`git add  package.json package-lock.json`, [], {
+      cwd: workingDir,
+    });
+    await exec.exec(`git commit -m "chore: update dependencies`, [], {
+      cwd: workingDir,
+    });
+    await exec.exec(`git push -u origin ${targetBranch} --force`, [], {
+      cwd: workingDir,
+    });
+
+    const octokit = github.getOctokit(ghToken);
+
+    try {
+      await octokit.rest.pulls.create({
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        title: 'Update NPM dependencies',
+        body: 'This pull request updates NPM packages',
+        base: baseBranch,
+        head: targetBranch
+      });
+    } catch (e) {
+      core.error('Something went wrong while creating the PR. Check the logs below')
+      core.setFailed(e.message);
+      core.error(e);
+    }
+    
+
+
   } else {
     core.info("No updates at this point in time")
   }
