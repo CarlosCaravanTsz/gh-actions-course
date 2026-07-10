@@ -13,6 +13,13 @@ inputs:
     description: "target env"
     default: dev
     required: false
+outputs:
+  installed-deps:
+    description: Whether dependencies were installed or not
+    value: ${{steps.cache.outputs.cache-hit != 'true'}}
+  random-output:
+    description: Some value
+    value: ${{steps.random-output.outputs.random}}
 
 runs:
   using: composite
@@ -32,3 +39,7 @@ runs:
       run: ${{ inputs.target-env == 'dev' && 'npm ci' || 'npm ci --omit=dev' }}
       shell: bash
       working-directory: ${{ inputs.working-dir }}
+    - name: RAndom output
+      id: random-output
+      shell: bash
+      run: echo "random=123" >> "$GITHUB_OUTPUT"

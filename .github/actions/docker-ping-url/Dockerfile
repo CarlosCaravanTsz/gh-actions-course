@@ -8,7 +8,7 @@ COPY pyproject.toml uv.lock ./
 
 RUN python -V
 
-ENV UV_PROJECT_DIR=/app
+# Agrega primero la ruta de la venv del dir para que se resuelva al interprete del venv
 ENV PATH=/app/.venv/bin:$PATH
 
 RUN uv sync --frozen
