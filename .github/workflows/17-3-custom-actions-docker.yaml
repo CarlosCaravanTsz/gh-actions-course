@@ -1,0 +1,20 @@
+name: 17 - 3 - Custom Actions - Docker
+run-name: 17 - 3 - Custom Actions - Docker
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        type: string
+        default: 'https://www.google.com'
+
+
+jobs:
+  ping-url:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4 # Needed for the composite action to be available in the workflow when the action is within the same repository
+      - name: PING UR;
+        uses: ./.github/actions/docker=ping-url
+        with:
+          url: ${{ inputs.url}}
+
