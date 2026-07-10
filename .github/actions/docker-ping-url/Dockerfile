@@ -8,9 +8,12 @@ COPY pyproject.toml uv.lock ./
 
 RUN python -V
 
+ENV UV_PROJECT_DIR=/app
+ENV PATH=/app/.venv/bin:$PATH
+
 RUN uv sync --frozen
 
 COPY . .
 
-CMD ["uv","run","main.py"]
+CMD ["python", "/app/main.py"]
 
