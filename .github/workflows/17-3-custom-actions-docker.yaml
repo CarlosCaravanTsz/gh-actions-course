@@ -1,32 +1,20 @@
-name: 17 - 2 - Custom Actions - JS
-run-name: 17 - 2 - Custom Actions - JS
+name: 17 - 3 - Custom Actions - Docker
+run-name: 17 - 3 - Custom Actions - Docker
 on:
   workflow_dispatch:
     inputs:
-      base-branch:
+      url:
         type: string
-        default: main
-      head-branch:
-        type: string
-        default: update-dependencies
-      working-dir:
-        type: string
-        default: ./react-app
+        default: 'https://www.google.com'
 
-permissions: # Extend permissions of the GITHUB TOKEN (valid for the current repo)
-  contents: write
-  pull-requests: write
 
 jobs:
-  dependency-update:
+  ping-url:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4 # Needed for the composite action to be available in the workflow when the action is within the same repository
-      - name: Check for dependency Update
-        uses: ./.github/actions/js-dependency-update
+      - name: PING UR;
+        uses: ./.github/actions/docker=ping-url
         with:
-          base-branch: ${{ inputs.base-branch}}
-          head-branch: ${{ inputs.target-branch }}
-          working-directory: ${{ inputs.working-dir }}
-          gh-token: ${{ secrets.GITHUB_TOKEN }}
+          url: ${{ inputs.url}}
 
