@@ -9,10 +9,10 @@ inputs:
     description: Maximum number of trials until action fails
     default: 10
     required: false
-    delay:
-      description: Delay in seconds between trials.
-      default: 5
-      required: false
+  delay:
+    description: Delay in seconds between trials.
+    default: 5
+    required: false
 
 runs:
   using: docker
