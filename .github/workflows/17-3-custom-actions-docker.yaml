@@ -1,0 +1,32 @@
+name: 17 - 2 - Custom Actions - JS
+run-name: 17 - 2 - Custom Actions - JS
+on:
+  workflow_dispatch:
+    inputs:
+      base-branch:
+        type: string
+        default: main
+      head-branch:
+        type: string
+        default: update-dependencies
+      working-dir:
+        type: string
+        default: ./react-app
+
+permissions: # Extend permissions of the GITHUB TOKEN (valid for the current repo)
+  contents: write
+  pull-requests: write
+
+jobs:
+  dependency-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4 # Needed for the composite action to be available in the workflow when the action is within the same repository
+      - name: Check for dependency Update
+        uses: ./.github/actions/js-dependency-update
+        with:
+          base-branch: ${{ inputs.base-branch}}
+          head-branch: ${{ inputs.target-branch }}
+          working-directory: ${{ inputs.working-dir }}
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
+
