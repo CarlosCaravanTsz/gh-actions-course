@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4 # Needed for the composite action to be available in the workflow when the action is within the same repository
-      - name: PING UR;
-        uses: ./.github/actions/docker=ping-url
+      - name: PING URL
+        uses: ./.github/actions/docker-ping-url
         with:
           url: ${{ inputs.url}}
 
