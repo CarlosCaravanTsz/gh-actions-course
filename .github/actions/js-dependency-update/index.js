@@ -55,8 +55,10 @@ async function run() {
     cwd: workingDir
   })
 
+  let updatesAvailable = false;
   if (gitStatus.stdout.length > 0) {
-    core.info('There are updates available!')
+    updatesAvailable = true;
+    core.info('There are updates available!');
     await exec.exec('git config --global user.name "gh-automation"')
     await exec.exec('git config --global user.email "testing@automation.ui"')
     await exec.exec(`git checkout -b ${headBranch} `, [], {
@@ -88,15 +90,12 @@ async function run() {
       core.setFailed(e.message);
       core.error(e);
     }
-    
-
 
   } else {
     core.info("No updates at this point in time")
   }
 
-
-
+  core.setOutput("updates-available", true);
 
 }
 

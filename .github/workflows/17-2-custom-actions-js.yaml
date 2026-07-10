@@ -23,10 +23,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4 # Needed for the composite action to be available in the workflow when the action is within the same repository
       - name: Check for dependency Update
+        id: update-deps
         uses: ./.github/actions/js-dependency-update
         with:
           base-branch: ${{ inputs.base-branch}}
-          head-branch: ${{ inputs.target-branch }}
+          head-branch: ${{ inputs.head-branch }}
           working-directory: ${{ inputs.working-dir }}
           gh-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Print custom action output
+        run: echo "Updates available ${{steps.update-deps.outputs.updates-available}}"
 
